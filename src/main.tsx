@@ -9,6 +9,7 @@ import App from './App.tsx'
 import './index.css'
 import Ejemplo1 from './examples/Ejemplo1/App'
 import Ejemplo2 from './examples/Ejemplo2/App'
+import Ejemplo3 from './examples/Ejemplo3/App'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<App />} />
         <Route path="/Ejemplo1" element={<Ejemplo1 />} />
         <Route path="/Ejemplo2" element={<Ejemplo2 />} />
+        <Route path="/Ejemplo3" element={<Ejemplo3 />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -10,6 +10,7 @@ function App() {
           <ul>
             <li><a href="/Ejemplo1">Drag & Drop Básico</a></li>
             <li><a href="/Ejemplo2">Persistencia de posición</a></li>
+            <li><a href="/Ejemplo3">Columnas kanban y cambio de lugar</a></li>
           </ul>
         </nav>  
       </header>
