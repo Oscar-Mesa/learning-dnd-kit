@@ -66,10 +66,14 @@ export default function App() {
     ) as ColumnKey;
   }
 
+  // Si alguno de los dos es null o undefined, no se hace nada.
   if (!sourceColumn || !destinationColumn) return;
 
-  const sourceItems = [...columns[sourceColumn]];
-  const destinationItems = [...columns[destinationColumn]];
+  // Dame la lista de tareas en la columna 'X',
+  // pero hazme una copia independiente para que pueda modificarla sin afectar directamente el tablero original
+  const sourceItems = [...columns[sourceColumn]]; // columns[sourceColumn]	Accede a las tareas de la columna origen
+  // [...columns[sourceColumn]]	Hace una copia de esas tareas, sourceItems	Es esa copia de la columna origen
+  const destinationItems = [...columns[destinationColumn]]; // Los ... copian todos los elementos de un arreglo dentro de otro. 
 
   const draggedItemIndex = sourceItems.findIndex((item) => item.id === active.id);
   const draggedItem = sourceItems[draggedItemIndex];
