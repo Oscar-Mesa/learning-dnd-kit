@@ -43,18 +43,26 @@ export default function App() {
   const sourceColumn = Object.keys(columns).find((col) => // .find((col) => ...) Esta función va a recorrer cada columna, 
   // y va a devolver la primera que cumpla la condición dentro del =>.
     columns[col as ColumnKey].some((item) => item.id === active.id)
-  ) as ColumnKey;
+  ) as ColumnKey; // Aquí estás revisando si dentro de esa columna, existe una tarea que 
+  // tenga el id del ítem que fue arrastrado (active.id).
+
+
 
   // Determinar si soltaste sobre una columna o sobre una tarjeta
-  let destinationColumn: ColumnKey | null = null;
+  //Declara una variable para guardar el nombre de la columna destino.
+  let destinationColumn: ColumnKey | null = null; //Se inicializa como null.
 
+  // ¿over.id coincide con alguna columna?
   if (columns[over.id as ColumnKey]) {
-    // es una columna vacía (id es 'hechas' o 'pendientes')
-    destinationColumn = over.id as ColumnKey;
+    // es una columna vacía (over.id es 'hechas' o 'pendientes')
+    destinationColumn = over.id as ColumnKey; // Se asigna el ID directamente como columna destino.
   } else {
-    // es una tarjeta
-    destinationColumn = Object.keys(columns).find((col) =>
-      columns[col as ColumnKey].some((item) => item.id === over.id)
+    // se soltó sobre una tarjeta
+    destinationColumn = Object.keys(columns).find((col) => // .find((col) => ...) 
+    // Busca en cuál de esas columnas se encuentra la tarjeta cuyo ID es over.id 
+    // (la tarjeta sobre la que se soltó otra).
+      columns[col as ColumnKey].some((item) => item.id === over.id) // Para cada columna, revisa si alguna 
+      // de sus tareas tiene el mismo id que over.id.
     ) as ColumnKey;
   }
 
