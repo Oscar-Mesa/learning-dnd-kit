@@ -35,9 +35,13 @@ export default function App() {
   // !over Si no hay nada debajo cuando se suelta 
   // (por ejemplo, si el ítem se soltó fuera de cualquier zona droppable),
   // Entonces no se debe hacer nada.
-  if (!over || active.id === over.id) return;
+  if (!over || active.id === over.id) return; // active.id === over.id
+  // Esto significa que soltaste el ítem sobre sí mismo 
+  // (por ejemplo, no cambiaste de lugar realmente). Tampoco hace falta mover nada.
 
-  const sourceColumn = Object.keys(columns).find((col) =>
+  //Object.keys(columns) Esto devuelve un arreglo con las claves del objeto columns ["pendientes", "hechas"]
+  const sourceColumn = Object.keys(columns).find((col) => // .find((col) => ...) Esta función va a recorrer cada columna, 
+  // y va a devolver la primera que cumpla la condición dentro del =>.
     columns[col as ColumnKey].some((item) => item.id === active.id)
   ) as ColumnKey;
 
