@@ -75,26 +75,48 @@ export default function App() {
   // [...columns[sourceColumn]]	Hace una copia de esas tareas, sourceItems	Es esa copia de la columna origen
   const destinationItems = [...columns[destinationColumn]]; // Los ... copian todos los elementos de un arreglo dentro de otro. 
 
+  // Busca en el array sourceItems la posición (índice) del ítem cuyo id coincide 
+  // con el id del ítem que fue arrastrado (active.id).
   const draggedItemIndex = sourceItems.findIndex((item) => item.id === active.id);
+  // guardamos el objeto en draggedItem
   const draggedItem = sourceItems[draggedItemIndex];
 
-  if (sourceColumn === destinationColumn) {
+  if (sourceColumn === destinationColumn) { // Si la columna de origen y la de destino son las mismas
     // reordenar dentro de la misma columna
-    const overIndex = destinationItems.findIndex((item) => item.id === over.id);
-    setColumns((prev) => ({
-      ...prev,
+    // destinationItems es la lista de tareas de la columna donde estás soltando la tarjeta.
+    const overIndex = destinationItems.findIndex((item) => item.id === over.id); //over.id es el id de la tarjeta sobre 
+    // la que soltaste la tarjeta arrastrada. findIndex(...) busca en destinationItems la posición donde el id 
+    // coincide con over.id.
+    setColumns((prev) => ({ // prev es el estado anterior de las columnas
+      ...prev, // Esto copia todas las columnas anteriores (para no perder ninguna).  
       [sourceColumn]: arrayMove(sourceItems, draggedItemIndex, overIndex),
-    }));
+    })); // sourceItems El arreglo que quieres modificar (una copia), draggedItemIndex 	La posición original 
+    // del ítem que estás moviendo, overIndex La posición nueva a la que lo quieres mover
   } else {
     // mover entre columnas
-    sourceItems.splice(draggedItemIndex, 1);
+    // sourceItems es una copia de la columna de donde salió la tarjeta.
+    sourceItems.splice(draggedItemIndex, 1); // .splice(índice, 1) elimina 1 elemento en esa posición.
 
+
+    // Si `over.id` es una columna (como "pendientes" o "hechas"), quiere decir que se soltó en una columna vacía.
+    // Entonces la tarea se inserta al inicio (posición 0)
+
+    // Si `over.id` es una tarjeta (como "2", "3", etc.), encontramos su índice en el arreglo destino,
+    // para insertar la nueva justo antes de esa.
     const overIndex = over.id in columns
       ? 0 // si se soltó sobre una columna vacía
       : destinationItems.findIndex((item) => item.id === over.id);
 
+
+    // Usamos `.splice(pos, 0, elemento)` para insertar SIN eliminar nada.
+    // Esto mete la tarjeta (`draggedItem`) en la posición `overIndex` dentro de la nueva columna.
     destinationItems.splice(overIndex, 0, draggedItem);
 
+
+    // Esta es la parte de React donde le decimos: "Hey, redibuja las listas con estos nuevos valores".
+    // - `...prev` copia todas las columnas anteriores (para no perder otras columnas).
+    // - `[sourceColumn]`: reemplaza la columna origen con el arreglo `sourceItems` (ya sin la tarjeta).
+    // - `[destinationColumn]`: reemplaza la columna destino con el arreglo `destinationItems` (ya con la tarjeta añadida).
     setColumns((prev) => ({
       ...prev,
       [sourceColumn]: sourceItems,
