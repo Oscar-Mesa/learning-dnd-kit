@@ -58,9 +58,9 @@ export default function App() {
     destinationColumn = over.id as ColumnKey; // Se asigna el ID directamente como columna destino.
   } else {
     // se soltó sobre una tarjeta
-    destinationColumn = Object.keys(columns).find((col) => // .find((col) => ...) 
-    // Busca en cuál de esas columnas se encuentra la tarjeta cuyo ID es over.id 
-    // (la tarjeta sobre la que se soltó otra).
+    destinationColumn = Object.keys(columns).
+    find((col) => // .find((col) => ...) // Busca en cuál de esas columnas se encuentra 
+    // la tarjeta cuyo ID es over.id (la tarjeta sobre la que se soltó otra).
       columns[col as ColumnKey].some((item) => item.id === over.id) // Para cada columna, revisa si alguna 
       // de sus tareas tiene el mismo id que over.id.
     ) as ColumnKey;
